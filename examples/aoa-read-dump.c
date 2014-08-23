@@ -1,6 +1,6 @@
 /*
  * aoa-read-dump.c : Example code to read raw data from android device
- * 		     which can work based on aoa-skeleton module
+ * 		     which can work based on aoa-skeleton module.
  *
  * Copyright (C) 2014 - Rajesh Sola <rajeshsola@gmail.com>
  *
