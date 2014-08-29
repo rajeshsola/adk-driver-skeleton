@@ -1,6 +1,6 @@
 /*
  * adk-ioctl.c : Userspace code to initialize linux machine as Android Accessory
- * 		 using ioctl method supported by adk-init module
+ * 		 using ioctl method supported by adk-aoa-skeleton or adk-init module
  *
  * Copyright (C) 2014 - Rajesh Sola <rajeshsola@gmail.com>
  *
@@ -15,8 +15,7 @@
  * for more details.
  * 
  * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * with this program; if not, see <http://www.gnu.org/licenses/>
  */
 
 #include<unistd.h>
