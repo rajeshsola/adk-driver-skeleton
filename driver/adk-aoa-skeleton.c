@@ -443,7 +443,7 @@ static int is_in_accessory_mode(int vid,int pid)
 static int aoa_get_version(struct usb_adk_aoa* dev)
 {
 	int ret,version,timeout=0,value=0,index=0;
-	char ver_buf[2];
+	char ver_buf[2];//two byte data to support versions > 255 in future
 	ret=usb_control_msg(dev->udev,usb_rcvctrlpipe(dev->udev, 0),
 			AOA_GET_PROTOCOL,USB_TYPE_VENDOR | USB_DIR_IN,
 			value,index,ver_buf,sizeof(ver_buf),timeout);
@@ -451,7 +451,7 @@ static int aoa_get_version(struct usb_adk_aoa* dev)
 		printk("ADKSKEL::error in getting protocol\n");
 		return -1;
 	}
-	version = ver_buf[1] << 8 | ver_buf[0];
+	version = ver_buf[1] << 8 | ver_buf[0];	
 	return version;
 }
 static int aoa_send_identity(struct usb_adk_aoa* dev,int ident_id,void* data,int size)
@@ -507,16 +507,17 @@ static int aoa_init_accessory(struct usb_adk_aoa* dev,const accessory_t* acc)
 	ret=aoa_send_identity(dev,AOA_STRING_SER_ID,acc->serial,strlen(acc->serial) + 1);
 	if(ret<0) goto err;
 
-	printk("ADKSKEL::starting device in accessory mode\n");
-	ret=aoa_start_mode(dev,AOA_START_ACCESSORY,1); // start in accessory mode
-	if(ret<0) goto err;
-	printk("ADKSKEL::Accessory got initialized successfully\n");
-
 	if(dev->aoa_version >=2 && (acc->mode & AOA_AUDIO_MODE)) {
 		printk("ADKSKEL::requesting audio support from the device\n");
 		ret=aoa_start_mode(dev,AOA_AUDIO_SUPPORT,1); //request audio support
 		if(ret<0) printk("ADKSKEL::failed to get audio support\n");
 	}
+
+	printk("ADKSKEL::starting device in accessory mode\n");
+	ret=aoa_start_mode(dev,AOA_START_ACCESSORY,1); // start in accessory mode
+	if(ret<0) goto err;
+	printk("ADKSKEL::Accessory got initialized successfully\n");
+
 	return 0;
 err:
 	printk("ADKSKEL::Accessory initialization got failed\n");
