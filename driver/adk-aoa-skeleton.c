@@ -600,10 +600,10 @@ static int adk_aoa_probe(struct usb_interface *interface,
 	}
 	else {
 		retval = usb_register_dev(interface, &aoa_class);
-		retval=kobject_init_and_add(&dev->adk_kobj,&adk_ktype,NULL,"%s","aoa_reinit");
+		/*retval=kobject_init_and_add(&dev->adk_kobj,&adk_ktype,NULL,"%s","aoa_reinit");
 		if (retval)
 		        kobject_put(&dev->adk_kobj);
-		kobject_uevent(&dev->adk_kobj, KOBJ_ADD);
+		kobject_uevent(&dev->adk_kobj, KOBJ_ADD);*/
 	}
 	if (retval) {
 		/* something prevented us from registering this driver */
