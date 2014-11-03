@@ -1,13 +1,12 @@
 all: drivers 
-obj-m += adk-aoa-skeleton.o
+DRIVER = adk-aoa-skeleton
+OBJS = adk-common.o adk-init.o aoa-skeleton.o adk-sysfs.o
+
+obj-m += $(DRIVER).o
+$(DRIVER)-objs := $(OBJS)
 
 KSRC ?= /lib/modules/$(shell uname -r)/build   #you may change as per your kernel build
-#ARM_KSRC=<ksrc-of-cross-built-kernel>
-#ARCH=arm
-#CC_PREFIX=<prefix-for-cross-compilation>
-
 drivers:
 	make -C $(KSRC) M=$(PWD) modules
-	#make -C ARCH=$(ARCH) CROSS_COMPILE=$(CC_PREFIX) -C $(ARM_KSRC) M=$(PWD) modules
 clean:
 	make -C $(KSRC) M=$(PWD) clean
