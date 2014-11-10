@@ -27,7 +27,7 @@
 //#include "adk-init.h"
 
 int my_device_vid=0x22b8;//0x04e8;
-int my_device_pid=0x2e82;//0x6865;
+int my_device_pid=0x2e76;//0x6865;
 int init_on_probe=0; //initialize device within probe only if this value is true
 		     //otherwise one need to go for ioctl later
 module_param(my_device_vid,int,S_IRUGO);
@@ -232,10 +232,16 @@ static int adk_aoa_probe(struct usb_interface *interface,
 	/* we are not registering other interfaces like audio,adb */
 	if(is_in_accessory_mode(dev) && dev->iface_number!=AOA_ACCESSORY_INTERFACE)
 	{
-		printk("Device doesn't support bulk interface for read/write\n");
+		printk("AOASKEL::Device doesn't support bulk interface for read/write\n");
 		return 0;
 	}
-	if(!is_in_accessory_mode(dev)) {
+	if(!is_in_accessory_mode(dev) && dev->iface_number!=AOA_ACCESSORY_INTERFACE)
+	{
+		printk("ADKSKEL::this interface doesn't meant for ADK\n");
+		return 0;
+	}
+	if(!is_in_accessory_mode(dev) && dev->iface_number==AOA_ACCESSORY_INTERFACE) 
+	{
 		retval = usb_register_dev(interface, &adk_class);
 		dev->adk_kobj.kset=adk_kset;
 		retval=kobject_init_and_add(&dev->adk_kobj,&adk_ktype,NULL,"%s","aoa_init");
