@@ -1,1 +1,0 @@
-cmd_/media/sda8/osidays/adk-driver-skeleton/driver/adk-aoa-skeleton.ko := ld -r -m elf_i386 -T /media/sda8/rtos/linux-3.2.21/scripts/module-common.lds --build-id  -o /media/sda8/osidays/adk-driver-skeleton/driver/adk-aoa-skeleton.ko /media/sda8/osidays/adk-driver-skeleton/driver/adk-aoa-skeleton.o /media/sda8/osidays/adk-driver-skeleton/driver/adk-aoa-skeleton.mod.o
